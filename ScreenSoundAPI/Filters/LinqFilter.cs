@@ -1,4 +1,5 @@
 ﻿using ScreenSoundAPI.Models;
+using System.Xml.Linq;
 
 namespace ScreenSoundAPI.Filters;
 
@@ -40,6 +41,29 @@ internal class LinqFilter
         foreach (var music in allMusicArtist)
         {
             Console.WriteLine($"- {music}");
+        }
+    }
+
+    public static Music FilterMusicsByName(List<Music> musics, string name)
+    {
+        var musicName = musics
+                            .Where(music => music.Name!.Equals(name))
+                            .First();
+        return musicName;
+    }
+
+    public static void FilterMusicsByTone(List<Music> musics)
+    {
+        var musicTone = musics
+                            .Where(music => music.Key.Equals(1))
+                            .Distinct()
+                            .ToList();
+        Console.WriteLine($"All Musics with C# tone");
+        foreach (var music in musicTone)
+        {
+            Console.WriteLine(music.Name);
+            Console.WriteLine(music.Artist);
+            Console.WriteLine(music.Tone + "\n");
         }
     }
 }
